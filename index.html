@@ -1,0 +1,48 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Pedidos</title>
+	<link href="./static/css/style.css" media="all" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="static/js/jquery.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="static/js/main.js"></script>
+</head>
+<body>
+
+
+<h1>Pedido para Refugio maleño</h1>
+
+<form>
+	<div>
+		<p>Para: refugiomaleno1@gmail.com</p>
+		<p>
+		<label for="name">Nombre: </label>
+		<input type="text" id="name" autofocus>
+		</p>
+		<p>
+		<label for="email">E-mail: </label>
+		<input type="email" id="email">
+		</p>
+		<p>
+		<label for="entrada">Entrada: </label>
+		<input type="entrada" id="entrada">
+		</p>
+		<p>
+		<label for="segundo">Segundo: </label>
+		<input type="segundo" id="segundo">
+		</p>
+
+		<p>
+		<input id="enviar" type="button" value="Enviar">
+		</p>
+	</div>
+
+<div>
+<p>Mensaje adicional</p>
+<textarea name="mensaje" id="mensaje" cols="10" rows="5">La dirección de la oficina es: Calle Fermín Tangüis 145 of 405, La Victoria, Lima. Favor confirmar la recepción de este pedido.</textarea>
+</div>
+</form>
+
+
+</body>
+</html>
