@@ -22,6 +22,10 @@ $(document).on('ready', function(){
 	
 	$enviar.on('click', fn.enviar);
 	
+	socket.on('visit', function(data){
+		$("h1").html(data.count + " visitors");
+	});
+
 	socket.on('finish', function (data) {
 		$enviar.prop( "disabled", false);
 		alert(data.message);
