@@ -69,6 +69,11 @@ function handler (req, res) {
 }
 
 io.on('connection', function (socket) {
+  
+  socket.emit('visit', {
+    count: io.engine.clientsCount
+  });
+
   socket.on('send', function (data) {
     args.push(`--url ${options.email.general.url} --user ${options.email.general.key}`);
     args.push(`--form from='${data.name} <${data.email}>'`);
