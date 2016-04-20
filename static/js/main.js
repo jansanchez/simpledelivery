@@ -1,5 +1,5 @@
 $(document).on('ready', function(){
-	var socket = io('http://localhost:8000');
+	var socket = io('http://172.18.60.24:3007');
 	var $name = $('#name');
 	var $email = $('#email');
 	var $entrada = $('#entrada');

@@ -22,8 +22,8 @@ var resetArgs = function resetArgs(){
   args = ['curl', '--no-buffer', '--show-error', '--silent'];
 }
 
-//var restaurant = { name: 'Refugio Maleño Maleño', email: 'refugiomaleno1@gmail.com' };
-var restaurant = { name: 'Jan Sanchez', email: 'joejansanchez@gmail.com' };
+var restaurant = { name: 'Refugio Maleño Maleño', email: 'refugiomaleno1@gmail.com' };
+// var restaurant = { name: 'Jan Sanchez', email: 'joejansanchez@gmail.com' };
 
 var options = {};
 
@@ -41,7 +41,7 @@ options.email.defaults = {
 
 resetArgs();
 
-app.listen(8000);
+app.listen(3007);
 
 function handler (req, res) {
   
@@ -87,7 +87,7 @@ io.on('connection', function (socket) {
           message: message
         });
       }
-      console.log(message);
+      console.log('Pedido realizado correctamente por: ' + data.name);
       resetArgs();
       return true;
     });
