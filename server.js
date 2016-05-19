@@ -5,9 +5,20 @@ var exec = require("child_process").exec;
 
 var args = [];
 
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
 var today = new Date();
+var yy = today.getFullYear();
 var dd = today.getDate();
 var mm = today.getMonth()+1;
+var h = addZero(today.getHours());
+var m = addZero(today.getMinutes());
+var s = addZero(today.getSeconds());
 
 if(dd<10) {
   dd='0'+dd
@@ -22,8 +33,8 @@ var resetArgs = function resetArgs(){
   args = ['curl', '--no-buffer', '--show-error', '--silent'];
 }
 
-var restaurant = { name: 'Refugio Maleño Maleño', email: 'refugiomaleno1@gmail.com' };
-// var restaurant = { name: 'Jan Sanchez', email: 'joejansanchez@gmail.com' };
+//var restaurant = { name: 'Refugio Maleño Maleño', email: 'refugiomaleno1@gmail.com' };
+var restaurant = { name: 'Jan Sanchez', email: 'joejansanchez@gmail.com' };
 
 var options = {};
 
@@ -41,10 +52,10 @@ options.email.defaults = {
 
 resetArgs();
 
-app.listen(3007);
+app.listen(3007, '104.131.84.72');
 
 function handler (req, res) {
-  
+
   var defaults = 'index.html';
   if(req.url !== '/'){
     defaults = req.url;
@@ -92,7 +103,14 @@ io.on('connection', function (socket) {
           message: message
         });
       }
-      console.log('Pedido realizado correctamente por: ' + data.name);
+	var log = 'Pedido realizado correctamente por: ' + data.name + ' el ' + dd + '/' + mm  + '/' + yy + ':' + h + ':' + m + ':' + s + '\n';
+	log = log + ' - Entrada: ' + data.entrada + '\n' + ' - Segundo: ' + data.segundo + '\n';
+
+      console.log(log);
+	
+	var logStream = fs.createWriteStream('log.txt', {'flags': 'a'});
+	logStream.end(log);
+
       resetArgs();
       return true;
     });
