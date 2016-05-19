@@ -33,8 +33,8 @@ var resetArgs = function resetArgs(){
   args = ['curl', '--no-buffer', '--show-error', '--silent'];
 }
 
-//var restaurant = { name: 'Refugio Maleño Maleño', email: 'refugiomaleno1@gmail.com' };
-var restaurant = { name: 'Jan Sanchez', email: 'joejansanchez@gmail.com' };
+var restaurant = { name: 'Refugio Maleño Maleño', email: 'refugiomaleno1@gmail.com' };
+// var restaurant = { name: 'Jan Sanchez', email: 'joejansanchez@gmail.com' };
 
 var options = {};
 
@@ -94,21 +94,40 @@ io.on('connection', function (socket) {
     args.push(`--form-string html='<p>Buenas, escribo para realizar el siguiente pedido:<br><br><b>Entrada:</b> ${data.entrada}<br><b>Segundo:</b> ${data.segundo}<br><br>${data.mensaje}<br><br>Muchas gracias<br></p>'`);
 
     exec(args.join(" "), function (error, stdout, stderr) {
-      message = '';
+      var message = '';
+      var status = 1;
       if (error) {
+      	status = 0
         message = error;
       }else{
-        message = JSON.parse(stdout).message;
+        message = 'Su pedido a sido enviado correctamente a: ' + restaurant.email;//JSON.parse(stdout).message;
+      }
+
         socket.emit('finish', {
           message: message
         });
-      }
-	var log = 'Pedido realizado correctamente por: ' + data.name + ' el ' + dd + '/' + mm  + '/' + yy + ':' + h + ':' + m + ':' + s + '\n';
-	log = log + ' - Entrada: ' + data.entrada + '\n' + ' - Segundo: ' + data.segundo + '\n';
 
-      console.log(log);
-	
-	var logStream = fs.createWriteStream('log.txt', {'flags': 'a'});
+	var order = {};
+	order.user = {};
+	order.order = {};
+
+	order.id = today.getTime();
+	order.id_restaurant = 1;
+	order.user.name = data.name;
+	order.user.email = data.email;
+	order.order.firstCourse = data.entrada;
+	order.order.secondCourse = data.segundo;
+	order.order.date = dd +'/'+ mm +'/'+ yy +'_'+ h +':'+ m +':'+ s;
+	order.status = status;
+	if (status === 0){
+		order.log = message;
+	}	
+
+	var log = JSON.stringify(order, function(clave, valor){
+		return valor;
+	}, 2) + ',\n';
+
+	var logStream = fs.createWriteStream('../log.json', {'flags': 'a'});
 	logStream.end(log);
 
       resetArgs();
