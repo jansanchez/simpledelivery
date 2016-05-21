@@ -100,7 +100,7 @@ io.on('connection', function (socket) {
       	status = 0
         message = error;
       }else{
-        message = 'Su pedido a sido enviado correctamente a: ' + restaurant.email;//JSON.parse(stdout).message;
+        message = 'Su pedido a sido enviado correctamente a: ' + restaurant.email; //JSON.parse(stdout).message;
       }
 
         socket.emit('finish', {
